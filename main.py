@@ -11,7 +11,7 @@ import os
 load_dotenv()
 SERPAPI_KEY = os.getenv("SERPAPI_KEY")
 SEARCH_QUERY = "high schools near Drexel University"
-EXCEL_FILENAMES = "drexel_highschools.xlsx"
+EXCEL_FILENAME = "drexel_highschools.xlsx"
 
 # STEP 1: GET SCHOOL LINKS FROM GOOGLE
 def get_school_links(query, api_key):
@@ -88,7 +88,9 @@ def main():
                 print(f"    ✘ No directory found")
         except Exception as e:
             print(f"    ⚠️ Skipped {link} due to error: {e}")
-
+            
+    save_to_excel(all_teachers, EXCEL_FILENAME)
+    
 if __name__ == "__main__":
     main()
     
