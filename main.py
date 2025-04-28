@@ -33,7 +33,43 @@ def get_school_links(query, api_key):
 
 
 # STEP 2: FIND STAFF/DIRECTORY PAGE
+def find_directory_link(home_html, base_url):
+    soup = BeautifulSoup(home_html, "html.parser")
+    for a in soup.find_all("a", href=True):
+        href = a["href"]
+        # if re.search(r"(staff|directory|contact)", href, re.IGNORECASE):
+        #     return urljoin(base_url, href)
+        if any(keyword in href.lower() for keyword in ["staff", "directory", "contact"]):
+            return urljoin(base_url, a["href"])
+    return None
 
+# STEP 3: SCRAPE TEACHER INFO FROM DIRECTORY PAGE
+def extract_teacher_info(html, school_url):
+    soup = BeautifulSoup(html, 'html.parser')
+    text = soup.get_text()
+    email_pattern = r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+"
+
+    emails = list(set(re.findall(email_pattern, text)))
+    teachers = []
+
+    for email in emails:
+        name_guess = email.split('@')[0].replace('.', ' ').replace('_', ' ').title()
+        teachers.append({
+            "Name": name_guess,
+            "Email": email,
+            "Subject": "",  # Advanced: use NLP to detect subject later
+            "School Website": school_url
+        })
+    return teachers
+
+# STEP 4: SAVE TO EXCEL
+def save_to_excel(data, filename):
+    print(f"[*] Saving data to {filename}...")
+    df = pd.DataFrame(data)
+    df.to_excel(filename, index=False)
+    print("[*] Data saved successfully.")
+
+# MAIN FUNCTION
 def main():
     pass
 
