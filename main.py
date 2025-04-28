@@ -71,7 +71,23 @@ def save_to_excel(data, filename):
 
 # MAIN FUNCTION
 def main():
-    pass
+    all_teachers = []
+    school_links = get_school_links(SEARCH_QUERY, SERPAPI_KEY)
+
+    for link in school_links:
+        try:
+            print(f"[*] Visiting: {link}")
+            home_res = requests.get(link, timeout=10)
+            dir_link = find_directory_link(home_res.text, link)
+            if dir_link:
+                print(f"    ↳ Found directory: {dir_link}")
+                dir_res = requests.get(dir_link, timeout=10)
+                teachers = extract_teacher_info(dir_res.text, link)
+                all_teachers.extend(teachers)
+            else:
+                print(f"    ✘ No directory found")
+        except Exception as e:
+            print(f"    ⚠️ Skipped {link} due to error: {e}")
 
 if __name__ == "__main__":
     main()
