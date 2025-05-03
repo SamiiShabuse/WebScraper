@@ -1,0 +1,4 @@
+✅ MATCHED: https://robeson.philasd.org/ → https://robeson.philasd.org/parents/ (via: 'about')
+✅ MATCHED: https://scienceleadership.org/ → https://scienceleadership.org/ (via: 'leadership')
+✅ MATCHED: https://centralhs.philasd.org/ → https://centralhs.philasd.org/about-central-high-school/ (via: 'about')
+⚠️ ERROR: https://benfranklinhs.philasd.org/ → HTTPSConnectionPool(host='benfranklinhs.philasd.org', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000001D8633C5450>: Failed to resolve 'benfranklinhs.philasd.org' ([Errno 11001] getaddrinfo failed)"))
